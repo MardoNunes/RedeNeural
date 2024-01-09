@@ -1,4 +1,5 @@
 class Matrix{
+    //inicializa a matriz com valores aleatórios
     constructor(rows, cols){
         this.rows = rows;
         this.cols = cols;
@@ -6,16 +7,17 @@ class Matrix{
         for(let i = 0; i < this.rows; i++){
             let arr = [];
             for(let j = 0; j < this.cols; j++){
-                arr.push(Math.floor(Math.random() * 10));
+                arr.push(0);
             }
             this.data.push(arr);
         }
     }
 
+    //aplica uma função a cada elemento da matriz
     static map(a, func){ 
-        let matrix = new Matrix(a.rows, b.cols);
+        let matrix = new Matrix(a.rows, a.cols);
         
-        matrix.data = matrix.data.map((arr, i) => {
+        matrix.data = a.data.map((arr, i) => {
             return arr.map((num,j) => {
                 return func(num,i,j);
             })
@@ -32,6 +34,7 @@ class Matrix{
         return this;
     }
 
+    //soma de duas matrizes
     static add(a,b){
         var matrix = new Matrix(a.rows, a.cols);
         matrix.map((num, i, j) => {
@@ -40,6 +43,7 @@ class Matrix{
          return matrix;
     }
 
+    //multiplicação de duas matrizes
     static multiply(a,b){
         var matrix = new Matrix(a.rows, b.cols);
         matrix.map((num, i, j) => {
@@ -67,12 +71,56 @@ class Matrix{
         console.table(this.data);
     }
 
+    static MatrixToArray(obj) {
+        let arr = []
+        obj.map((elm, i, j) => {
+            arr.push(elm);
+        })
+        return arr;
+    }
+
     static  arrayToMatrix(arr){
-        var matrix = new Matrix(arr.length, 1);
+        let matrix = new Matrix(arr.length, 1);
         matrix.map((num, i, j) => {
             return arr[i];
         });
         return matrix;
+    }
+
+    //produto hadamard
+    static hadamard(a,b){
+        var matrix = new Matrix(a.rows, a.cols);
+        matrix.map((num, i, j) => {
+            return a.data[i][j] * b.data[i][j];
+        });
+         return matrix;
+    }
+
+    //prudot de uma matriz por um escalar
+    static escalar_multiply(a, escalar){
+        var matrix = new Matrix(a.rows, a.cols);
+        matrix.map((num, i, j) => {
+            return a.data[i][j] * escalar;
+        });
+         return matrix;
+    }
+
+    //trnaposicao de uma matriz
+    static transpose(a){
+        var matrix = new Matrix(a.cols, a.rows);
+        matrix.map((num, i, j) => {
+            return a.data[j][i];
+        });
+         return matrix;
+    }
+
+    //subtracao de duas matrizes
+    static subtract(a,b){
+        var matrix = new Matrix(a.rows, a.cols);
+        matrix.map((num, i, j) => {
+            return a.data[i][j] - b.data[i][j];
+        });
+         return matrix;
     }
 
 }
